@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Mac OS在线重装系统</title>
+    <url>/2021/07/25/Mac%20OS%E5%9C%A8%E7%BA%BF%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/</url>
+    <content><![CDATA[<p>本文介绍用网络在线的方式来安装Mac OS系统，网络安装是指从苹果官网下载系统并安装，它只需要联网即可，不需要制作U盘启动等，比较方便快捷</p>
+<h3 id="1-进入系统安装页"><a href="#1-进入系统安装页" class="headerlink" title="1. 进入系统安装页"></a>1. 进入系统安装页</h3><p>在按下电源键之后，按住<strong>Command+R</strong>（为防止错过，可以先按键，再开机），会进入【macOS实用工具】界面</p>
+<h3 id="2-用磁盘工具格式化磁盘"><a href="#2-用磁盘工具格式化磁盘" class="headerlink" title="2. 用磁盘工具格式化磁盘"></a>2. 用磁盘工具格式化磁盘</h3><p>磁盘工具进行格式化不是必须的，如果是新电脑，从来没有对系统盘做过格式化，或者重装的时候，想清除原来所有的文件，才需要选择磁盘工具。</p>
+<p>在实用工具页面，点击【磁盘工具】，在左侧选择设备，点击 抹掉，</p>
+<ul>
+<li>名称 ：Macintosh HD</li>
+<li>格式： Mac OS 扩展（日志式）或APFS</li>
+<li>方案：GUID分区图</li>
+</ul>
+<p>点击抹掉，开始格式化，然后退出磁盘工具</p>
+<blockquote>
+<p>查看本机文件系统格式的方法：关于本机-概述-系统报告-储存</p>
+</blockquote>
+<h3 id="3-在线下载和安装"><a href="#3-在线下载和安装" class="headerlink" title="3. 在线下载和安装"></a>3. 在线下载和安装</h3><p>返回到实用工具主界面，选择【重新安装MacOS】，下一步，选择要安装的硬盘，点击安装，接下来就是漫长的下载和自动安装过程。<strong>务必要保证网络连通</strong>，看右上角网络的状态。</p>
+<h3 id="4-系统常规设置"><a href="#4-系统常规设置" class="headerlink" title="4. 系统常规设置"></a>4. 系统常规设置</h3><p>一般默认就可以。</p>
+<p>苹果键盘布局，选择美式英文，不选中文</p>
+<p>输入法先默认ABC输入法，后面可以下载搜狗输入法</p>
+<h3 id="5-遇到的问题"><a href="#5-遇到的问题" class="headerlink" title="5. 遇到的问题"></a>5. 遇到的问题</h3><ol>
+<li><p>点击重置系统后，下一步，出现一个带问号的磁盘，不能点继续</p>
+<p>说明磁盘没有格式化，需要进行格式化</p>
+</li>
+<li><p>点击安装系统，会报服务端错误</p>
+<p>看右上角 wifi的信号是否连接，网上很多说是本地时间不对，和服务端校对不通过导致，但我的情况是因为网络没有连通，重新连接下就好了。进入系统时，虽然已经连接过，在这里还要再连接一次。</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>软件</category>
+      </categories>
+      <tags>
+        <tag>Mac OS</tag>
+        <tag>系统安装</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>在Centos上搭建shadowsocks服务</title>
     <url>/2021/04/05/%E5%9C%A8Centos%E4%B8%8A%E6%90%AD%E5%BB%BAshadowsocks%E6%9C%8D%E5%8A%A1/</url>
     <content><![CDATA[<p>在搬瓦工上新购买的vps，系统默认安装的是centos7，所以下面教程是以Centos7为例，如果是Ubuntu，将yum换成apt-get即可</p>
