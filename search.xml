@@ -40,63 +40,6 @@
       </tags>
   </entry>
   <entry>
-    <title>在Centos上搭建shadowsocks服务</title>
-    <url>/2021/04/05/%E5%9C%A8Centos%E4%B8%8A%E6%90%AD%E5%BB%BAshadowsocks%E6%9C%8D%E5%8A%A1/</url>
-    <content><![CDATA[<p>在搬瓦工上新购买的vps，系统默认安装的是centos7，所以下面教程是以Centos7为例，如果是Ubuntu，将yum换成apt-get即可</p>
-<h4 id="1-首先安装epel扩展源，相当于第三方源，官方源比较滞后，会导致后面安装pip，提示-No-package-python-pip-available"><a href="#1-首先安装epel扩展源，相当于第三方源，官方源比较滞后，会导致后面安装pip，提示-No-package-python-pip-available" class="headerlink" title="1.首先安装epel扩展源，相当于第三方源，官方源比较滞后，会导致后面安装pip，提示-No-package-python-pip-available"></a>1.首先安装epel扩展源，相当于第三方源，官方源比较滞后，会导致后面安装pip，提示-No-package-python-pip-available</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y epel-release</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-安装pip，pip-是-Python-的包管理工具"><a href="#2-安装pip，pip-是-Python-的包管理工具" class="headerlink" title="2. 安装pip，pip 是 Python 的包管理工具"></a>2. 安装pip，pip 是 Python 的包管理工具</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y python-pip</span><br></pre></td></tr></table></figure>
-
-<p>如果仍然出现报错信息</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Loaded plugins: fastestmirror, ovl</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line">...</span><br><span class="line">No package python-pip available.</span><br><span class="line">Error: Nothing to do</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<p>是因为开启fastestmirror导致，修改方法如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(1) vi /etc/yum/pluginconf.d/fastestmirror.conf</span><br><span class="line">然后enable=0 // 由1改成0，即禁用该插件</span><br><span class="line"></span><br><span class="line">(2)清除缓存并重新构建yum 源</span><br><span class="line">yum clean all</span><br><span class="line">yum makecache</span><br><span class="line"></span><br><span class="line">(3) 重新执行pip安装</span><br><span class="line">yum -y install python-pip</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-升级pip"><a href="#3-升级pip" class="headerlink" title="3. 升级pip"></a>3. 升级pip</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install --upgrade pip</span><br></pre></td></tr></table></figure>
-
-<h4 id="4-pip安装shadowsocks"><a href="#4-pip安装shadowsocks" class="headerlink" title="4.  pip安装shadowsocks"></a>4.  pip安装shadowsocks</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install shadowsocks</span><br></pre></td></tr></table></figure>
-
-<h4 id="5-创建shadowsocks配置文件"><a href="#5-创建shadowsocks配置文件" class="headerlink" title="5. 创建shadowsocks配置文件"></a>5. 创建shadowsocks配置文件</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim /etc/shadowsocks.json</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;server&quot;: &quot;::&quot;,  #监听所有的ipv4和ipv6地址</span><br><span class="line">  &quot;server_port&quot;: 8888, #服务器端口号，1025到65535任选一。</span><br><span class="line">  &quot;password&quot;: &quot;xxx&quot;, #设置登录密码。</span><br><span class="line">  &quot;timeout&quot;:300, #等待超时</span><br><span class="line">  &quot;method&quot;: &quot;rc4-md5&quot;, #加密方式，官方默认使用aes-256-cfb，推荐使用rc4-md5，因为 RC4比AES速度快</span><br><span class="line">  &quot;fast_open&quot;:true, #如果你的服务器 Linux 内核在3.7+，可以开启 fast_open 以降低延迟</span><br><span class="line">  &quot;workers&quot;: 3 #工作线程数，默认为1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>查看linux内核信息 <code>uname -r</code></p>
-</blockquote>
-<h4 id="6-启动shadowsocks"><a href="#6-启动shadowsocks" class="headerlink" title="6. 启动shadowsocks"></a>6. 启动shadowsocks</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssserver -c /etc/shadowsocks.json -d start</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>-d 表示后台运行</p>
-</blockquote>
-<p>还有两种常用的操作</p>
-<ul>
-<li>停止</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssserver -c /etc/shadowsocks.json -d stop</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>重启(如果修改了配置文件，需要重启服务才生效))</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssserver -c /etc/shadowsocks.json -d stop</span><br></pre></td></tr></table></figure>
-
-<h4 id="7-启动成功后，用telnet查看端口是否打开"><a href="#7-启动成功后，用telnet查看端口是否打开" class="headerlink" title="7. 启动成功后，用telnet查看端口是否打开"></a>7. 启动成功后，用telnet查看端口是否打开</h4><p>打开cmd，输入</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">telnet ip地址 端口号</span><br></pre></td></tr></table></figure>
-
-<p>如果进入命令行，说明打开。如果提示 无法打开主机的连接，则说明未打开端口</p>
-<blockquote>
-<p>win7默认没有打开telnet服务，从控制面板-程序-打开或关闭Windows功能，勾选Telnet服务器和Telnet客户端</p>
-</blockquote>
-<h4 id="8-客户端安装Shadowsocks，设置IP地址、端口号，加密方式，访问www-google-com看是否能连接成功"><a href="#8-客户端安装Shadowsocks，设置IP地址、端口号，加密方式，访问www-google-com看是否能连接成功" class="headerlink" title="8.  客户端安装Shadowsocks，设置IP地址、端口号，加密方式，访问www.google.com看是否能连接成功"></a>8.  客户端安装Shadowsocks，设置IP地址、端口号，加密方式，访问<code>www.google.com</code>看是否能连接成功</h4><p>扩展阅读：Privoxy，BBR加速</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Shadowsocks</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>加入新项目，如何快速阅读App源码</title>
     <url>/2021/09/12/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/</url>
     <content><![CDATA[<p>做移动端开发，难免会因工作变动，加入一个新的项目组。而到了新项目组，首先要面临一个必备工作，<strong>阅读项目源码</strong>。如何有条理、快速的了解新项目的架构和业务，分享自己的一些心得。</p>
@@ -160,6 +103,63 @@
         <tag>源码</tag>
         <tag>新项目</tag>
         <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在Centos上搭建shadowsocks服务</title>
+    <url>/2021/04/05/%E5%9C%A8Centos%E4%B8%8A%E6%90%AD%E5%BB%BAshadowsocks%E6%9C%8D%E5%8A%A1/</url>
+    <content><![CDATA[<p>在搬瓦工上新购买的vps，系统默认安装的是centos7，所以下面教程是以Centos7为例，如果是Ubuntu，将yum换成apt-get即可</p>
+<h4 id="1-首先安装epel扩展源，相当于第三方源，官方源比较滞后，会导致后面安装pip，提示-No-package-python-pip-available"><a href="#1-首先安装epel扩展源，相当于第三方源，官方源比较滞后，会导致后面安装pip，提示-No-package-python-pip-available" class="headerlink" title="1.首先安装epel扩展源，相当于第三方源，官方源比较滞后，会导致后面安装pip，提示-No-package-python-pip-available"></a>1.首先安装epel扩展源，相当于第三方源，官方源比较滞后，会导致后面安装pip，提示-No-package-python-pip-available</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y epel-release</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-安装pip，pip-是-Python-的包管理工具"><a href="#2-安装pip，pip-是-Python-的包管理工具" class="headerlink" title="2. 安装pip，pip 是 Python 的包管理工具"></a>2. 安装pip，pip 是 Python 的包管理工具</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y python-pip</span><br></pre></td></tr></table></figure>
+
+<p>如果仍然出现报错信息</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Loaded plugins: fastestmirror, ovl</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line">...</span><br><span class="line">No package python-pip available.</span><br><span class="line">Error: Nothing to do</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>是因为开启fastestmirror导致，修改方法如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">(1) vi /etc/yum/pluginconf.d/fastestmirror.conf</span><br><span class="line">然后enable=0 // 由1改成0，即禁用该插件</span><br><span class="line"></span><br><span class="line">(2)清除缓存并重新构建yum 源</span><br><span class="line">yum clean all</span><br><span class="line">yum makecache</span><br><span class="line"></span><br><span class="line">(3) 重新执行pip安装</span><br><span class="line">yum -y install python-pip</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-升级pip"><a href="#3-升级pip" class="headerlink" title="3. 升级pip"></a>3. 升级pip</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install --upgrade pip</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-pip安装shadowsocks"><a href="#4-pip安装shadowsocks" class="headerlink" title="4.  pip安装shadowsocks"></a>4.  pip安装shadowsocks</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install shadowsocks</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-创建shadowsocks配置文件"><a href="#5-创建shadowsocks配置文件" class="headerlink" title="5. 创建shadowsocks配置文件"></a>5. 创建shadowsocks配置文件</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim /etc/shadowsocks.json</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;server&quot;: &quot;::&quot;,  #监听所有的ipv4和ipv6地址</span><br><span class="line">  &quot;server_port&quot;: 8888, #服务器端口号，1025到65535任选一。</span><br><span class="line">  &quot;password&quot;: &quot;xxx&quot;, #设置登录密码。</span><br><span class="line">  &quot;timeout&quot;:300, #等待超时</span><br><span class="line">  &quot;method&quot;: &quot;rc4-md5&quot;, #加密方式，官方默认使用aes-256-cfb，推荐使用rc4-md5，因为 RC4比AES速度快</span><br><span class="line">  &quot;fast_open&quot;:true, #如果你的服务器 Linux 内核在3.7+，可以开启 fast_open 以降低延迟</span><br><span class="line">  &quot;workers&quot;: 3 #工作线程数，默认为1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>查看linux内核信息 <code>uname -r</code></p>
+</blockquote>
+<h4 id="6-启动shadowsocks"><a href="#6-启动shadowsocks" class="headerlink" title="6. 启动shadowsocks"></a>6. 启动shadowsocks</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssserver -c /etc/shadowsocks.json -d start</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>-d 表示后台运行</p>
+</blockquote>
+<p>还有两种常用的操作</p>
+<ul>
+<li>停止</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssserver -c /etc/shadowsocks.json -d stop</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>重启(如果修改了配置文件，需要重启服务才生效))</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssserver -c /etc/shadowsocks.json -d stop</span><br></pre></td></tr></table></figure>
+
+<h4 id="7-启动成功后，用telnet查看端口是否打开"><a href="#7-启动成功后，用telnet查看端口是否打开" class="headerlink" title="7. 启动成功后，用telnet查看端口是否打开"></a>7. 启动成功后，用telnet查看端口是否打开</h4><p>打开cmd，输入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">telnet ip地址 端口号</span><br></pre></td></tr></table></figure>
+
+<p>如果进入命令行，说明打开。如果提示 无法打开主机的连接，则说明未打开端口</p>
+<blockquote>
+<p>win7默认没有打开telnet服务，从控制面板-程序-打开或关闭Windows功能，勾选Telnet服务器和Telnet客户端</p>
+</blockquote>
+<h4 id="8-客户端安装Shadowsocks，设置IP地址、端口号，加密方式，访问www-google-com看是否能连接成功"><a href="#8-客户端安装Shadowsocks，设置IP地址、端口号，加密方式，访问www-google-com看是否能连接成功" class="headerlink" title="8.  客户端安装Shadowsocks，设置IP地址、端口号，加密方式，访问www.google.com看是否能连接成功"></a>8.  客户端安装Shadowsocks，设置IP地址、端口号，加密方式，访问<code>www.google.com</code>看是否能连接成功</h4><p>扩展阅读：Privoxy，BBR加速</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Shadowsocks</tag>
       </tags>
   </entry>
   <entry>
