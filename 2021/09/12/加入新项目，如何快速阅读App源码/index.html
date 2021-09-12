@@ -20,18 +20,18 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"skycrown.net","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="做移动端开发，难免会因工作变动，加入一个新的项目组。而到了新项目组，首先要面临一个必备工作，阅读项目源码。如何有条理、快速的了解新项目的架构和业务，分享自己的一些心得。">
+<meta name="description" content="做移动端开发，难免会因工作变动，加入一个新的项目组。而到了新项目组，首先要面临一个必备工作，阅读项目源码。如何有条理、快速的了解新项目的架构和业务，分享自己的一些心得。 应用代码可以分层来阅读，比如分成界面展示层、逻辑控制层和业务数据层，也就是Model-View-Controller&#x2F;Presenter分层结构，在每层借助的工具和阅读的重点各有不同，下面分别介绍">
 <meta property="og:type" content="article">
 <meta property="og:title" content="加入新项目，如何快速阅读App源码">
 <meta property="og:url" content="http://skycrown.net/2021/09/12/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/index.html">
 <meta property="og:site_name" content="skycrown&#39;s blog">
-<meta property="og:description" content="做移动端开发，难免会因工作变动，加入一个新的项目组。而到了新项目组，首先要面临一个必备工作，阅读项目源码。如何有条理、快速的了解新项目的架构和业务，分享自己的一些心得。">
+<meta property="og:description" content="做移动端开发，难免会因工作变动，加入一个新的项目组。而到了新项目组，首先要面临一个必备工作，阅读项目源码。如何有条理、快速的了解新项目的架构和业务，分享自己的一些心得。 应用代码可以分层来阅读，比如分成界面展示层、逻辑控制层和业务数据层，也就是Model-View-Controller&#x2F;Presenter分层结构，在每层借助的工具和阅读的重点各有不同，下面分别介绍">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://skycrown.net/2021/09/12/images/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/logcat-displayed-1433043.png">
-<meta property="og:image" content="http://skycrown.net/2021/09/12/images/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/layoutinspector-1433051.png">
-<meta property="og:image" content="http://skycrown.net/2021/09/12/images/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/%E8%B0%83%E8%AF%95-1433062.png">
-<meta property="og:image" content="http://skycrown.net/2021/09/12/images/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/%E5%8F%8D%E7%BC%96%E8%AF%91%E6%90%9C%E7%B4%A2-1433072.png">
-<meta property="og:image" content="http://skycrown.net/2021/09/12/images/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/%E5%8F%8D%E7%BC%96%E8%AF%91%E6%9F%A5%E6%89%BE%E7%94%A8%E4%BE%8B-1433077.png">
+<meta property="og:image" content="http://skycrown.net/images/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/logcat-displayed.png">
+<meta property="og:image" content="http://skycrown.net/images/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/layoutinspector.png">
+<meta property="og:image" content="http://skycrown.net/images/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/%E8%B0%83%E8%AF%95.png">
+<meta property="og:image" content="http://skycrown.net/images/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/%E5%8F%8D%E7%BC%96%E8%AF%91%E6%90%9C%E7%B4%A2.png">
+<meta property="og:image" content="http://skycrown.net/images/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/%E5%8F%8D%E7%BC%96%E8%AF%91%E6%9F%A5%E6%89%BE%E7%94%A8%E4%BE%8B.png">
 <meta property="article:published_time" content="2021-09-12T07:34:12.000Z">
 <meta property="article:modified_time" content="2021-09-12T07:34:12.000Z">
 <meta property="article:author" content="skycrown">
@@ -40,7 +40,7 @@
 <meta property="article:tag" content="新项目">
 <meta property="article:tag" content="Android">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://skycrown.net/2021/09/12/images/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/logcat-displayed-1433043.png">
+<meta name="twitter:image" content="http://skycrown.net/images/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/logcat-displayed.png">
 
 
 <link rel="canonical" href="http://skycrown.net/2021/09/12/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/">
@@ -290,23 +290,23 @@
     
     <div class="post-body" itemprop="articleBody">
         <p>做移动端开发，难免会因工作变动，加入一个新的项目组。而到了新项目组，首先要面临一个必备工作，<strong>阅读项目源码</strong>。如何有条理、快速的了解新项目的架构和业务，分享自己的一些心得。</p>
+<p>应用代码可以分层来阅读，比如分成<strong>界面展示层</strong>、<strong>逻辑控制层</strong>和<strong>业务数据层</strong>，也就是Model-View-Controller/Presenter分层结构，在每层借助的工具和阅读的重点各有不同，下面分别介绍</p>
 <span id="more"></span>
 
-<p>应用代码可以分层来阅读，比如分成<strong>界面展示层</strong>、<strong>逻辑控制层</strong>和<strong>业务数据层</strong>，也就是Model-View-Controller/Presenter分层结构，在每层借助的工具和阅读的重点各有不同，下面分别介绍</p>
 <h2 id="界面展示层"><a href="#界面展示层" class="headerlink" title="界面展示层"></a>界面展示层</h2><blockquote>
 <p>借助工具：logcat和Layout Inspector</p>
 </blockquote>
 <p>页面UI是最直观的视觉元素，是业务功能的具体表现，也是阅读项目源码很好的入口，Android中的UI主要是由Activity、Fragment、View等组件构成的，了解的顺序也是从Activity、Fragment再到具体的View。</p>
 <h4 id="动手操作业务主流程，了解页面之间的跳转（Activity层次）"><a href="#动手操作业务主流程，了解页面之间的跳转（Activity层次）" class="headerlink" title="动手操作业务主流程，了解页面之间的跳转（Activity层次）"></a>动手操作业务主流程，了解页面之间的跳转（Activity层次）</h4><p>业务主流程是指app主打功能，比如，如果是购物app，就是浏览-&gt;加购-&gt;下单-&gt;支付，如果是短视频app，就是浏览-&gt;发帖。在Android Studio（以下简称AS）中打开logcat，过滤”displayed “ 关键字，然后操作主流程，看下依次经历哪些Activity的切换，分别记录下来。</p>
-<p><img src="../images/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/logcat-displayed-1433043.png" alt="logcat-displayed"></p>
+<p><img src="/images/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/logcat-displayed.png" alt="logcat-displayed"></p>
 <h4 id="分析每个页面的布局组织层次（View层次）"><a href="#分析每个页面的布局组织层次（View层次）" class="headerlink" title="分析每个页面的布局组织层次（View层次）"></a>分析每个页面的布局组织层次（View层次）</h4><p>在上一步中记录的各个Activity，还需要分析它们的页面布局，是一个RecycleView组成的滑动列表，还是一个ViewPager构成的tab切换，还是多个Fragment的嵌套，在AS中打开Layout Inspector来分析页面结构，查看各个View层次结构，对整个页面结构有个整体认识，同时找到对应的布局xml文件。找xml文件，可以在Activity和Fragment直接搜索R.layout.，或者根据前面Inspector，可以根据自定义view类名，或者view id来全局搜索。</p>
-<p><img src="../images/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/layoutinspector-1433051.png" alt="layoutinspector"></p>
+<p><img src="/images/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/layoutinspector.png" alt="layoutinspector"></p>
 <h2 id="逻辑控制层"><a href="#逻辑控制层" class="headerlink" title="逻辑控制层"></a>逻辑控制层</h2><blockquote>
 <p>借助工具：Android Studio Debug</p>
 </blockquote>
 <p>逻辑控制层介于界面层和数据层之间，主要负责业务流程的轮转，类名大多为XXController或者XXPresenter，XXManager等等。从Activity找到布局按钮，在它的onClick中断点来一步步调试、跟进。</p>
 <p>断点有两种方式，一种是入口处，比如onClick，来跟踪后面的处理。一种是出口或者关卡处，比如bindData，但是不知道从哪里来触发，在出口处断点，往上去找。AS中断点堆栈可以复制下来，方便做流程时序图用。</p>
-<p><img src="../images/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/%E8%B0%83%E8%AF%95-1433062.png" alt="调试"></p>
+<p><img src="/images/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/%E8%B0%83%E8%AF%95.png" alt="调试"></p>
 <p>通常逻辑层中，会涉及到一些消息的传递，比如广播，event事件总线，Message，这些都是基于观察者模式，并且是异步的，无法顺序跟踪，不是很方便。可以多用shift+F全局搜索，比如搜索Action，找到广播接受者，通过event id，来找到订阅者、通过Message what，找到Handler处理者。</p>
 <p>还有很多时候，会通过callback或者listener来回调到UI层，多注意下这些对象。</p>
 <h2 id="业务数据层"><a href="#业务数据层" class="headerlink" title="业务数据层"></a>业务数据层</h2><blockquote>
@@ -337,9 +337,9 @@
 <p>借助工具：jadx</p>
 </blockquote>
 <p>根据类名、字符串来进行全局搜索，</p>
-<p><img src="../images/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/%E5%8F%8D%E7%BC%96%E8%AF%91%E6%90%9C%E7%B4%A2-1433072.png" alt="反编译搜索"></p>
+<p><img src="/images/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/%E5%8F%8D%E7%BC%96%E8%AF%91%E6%90%9C%E7%B4%A2.png" alt="反编译搜索"></p>
 <p>右键通过查看声明，来找到定义的地方，查看用例，来找到使用的地方，顺着引用链路，来一层层找到调用地方。</p>
-<p><img src="../images/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/%E5%8F%8D%E7%BC%96%E8%AF%91%E6%9F%A5%E6%89%BE%E7%94%A8%E4%BE%8B-1433077.png" alt="反编译查找用例"></p>
+<p><img src="/images/%E5%8A%A0%E5%85%A5%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBApp%E6%BA%90%E7%A0%81/%E5%8F%8D%E7%BC%96%E8%AF%91%E6%9F%A5%E6%89%BE%E7%94%A8%E4%BE%8B.png" alt="反编译查找用例"></p>
 <h2 id="带着问题去阅读"><a href="#带着问题去阅读" class="headerlink" title="带着问题去阅读"></a>带着问题去阅读</h2><p>在阅读之前，先提出几个问题，列出list，然后逐个解决，顺着问题来阅读，不至于迷失方向，没有目标。</p>
 
     </div>
