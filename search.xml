@@ -220,23 +220,6 @@
       </tags>
   </entry>
   <entry>
-    <title>新的开始</title>
-    <url>/2021/04/05/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/</url>
-    <content><![CDATA[<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><p>用了两天时间，把博客升级为最新的NexT主题，发现样式更简洁，第三方功能更全，配置更为简单。从2016年毕业后，文章基本没有更新，还是一些之前零零散散的文章。这次借升级，也把之前陈旧的文章都删除，打算重新开始写。</p>
-<h2 id="反思"><a href="#反思" class="headerlink" title="反思"></a>反思</h2><p>转眼毕业快5年，发现沉淀记录的不多。如果说前3年，还是以学习输入为主，那么从5年开始，应该有所输出，通过输出倒逼输入，也能锻炼自己文字总结和表达能力，以博客为载体，希望以后能多些记录和沉淀。</p>
-<span id="more"></span>
-<h2 id="规划"><a href="#规划" class="headerlink" title="规划"></a>规划</h2><p>以后，会在博客中记录Android技术，源码阅读，工作方法等方面的内容。文章以短文为主，内容较多的，要分成多给章节，方便碎片化的时间阅读，也不至于阅读枯燥。2021，一起加油~</p>
-]]></content>
-      <categories>
-        <category>日志</category>
-        <category>第一天</category>
-      </categories>
-      <tags>
-        <tag>随笔</tag>
-        <tag>我的</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>聊聊解决问题的套路</title>
     <url>/2022/04/05/%E8%81%8A%E8%81%8A%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98%E7%9A%84%E5%A5%97%E8%B7%AF/</url>
     <content><![CDATA[<p>作为开发者，每天都会遇到新的问题，甚至于说我的工作就是<strong>不断地解决问题</strong>。碰到问题总会让人苦恼，怎样能快速的解决问题，在找不到思路的时候，能否有一些方法来指导，推进问题的解决，本文简单聊聊解决问题的常用套路，仅仅是自己的一些见解，期待有所共鸣。</p>
@@ -283,6 +266,23 @@
       <tags>
         <tag>工作</tag>
         <tag>总结</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>新的开始</title>
+    <url>/2021/04/05/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/</url>
+    <content><![CDATA[<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><p>用了两天时间，把博客升级为最新的NexT主题，发现样式更简洁，第三方功能更全，配置更为简单。从2016年毕业后，文章基本没有更新，还是一些之前零零散散的文章。这次借升级，也把之前陈旧的文章都删除，打算重新开始写。</p>
+<h2 id="反思"><a href="#反思" class="headerlink" title="反思"></a>反思</h2><p>转眼毕业快5年，发现沉淀记录的不多。如果说前3年，还是以学习输入为主，那么从5年开始，应该有所输出，通过输出倒逼输入，也能锻炼自己文字总结和表达能力，以博客为载体，希望以后能多些记录和沉淀。</p>
+<span id="more"></span>
+<h2 id="规划"><a href="#规划" class="headerlink" title="规划"></a>规划</h2><p>以后，会在博客中记录Android技术，源码阅读，工作方法等方面的内容。文章以短文为主，内容较多的，要分成多给章节，方便碎片化的时间阅读，也不至于阅读枯燥。2021，一起加油~</p>
+]]></content>
+      <categories>
+        <category>日志</category>
+        <category>第一天</category>
+      </categories>
+      <tags>
+        <tag>随笔</tag>
+        <tag>我的</tag>
       </tags>
   </entry>
 </search>
